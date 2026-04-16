@@ -1063,6 +1063,22 @@ tr:hover td { background: var(--gray-50); }
           <button class="btn btn-gold" onclick="imprimirTodasCarteirinhas()">🖨️ Imprimir Selecionados</button>
           <button class="btn btn-outline" onclick="selecionarTodos()">☑️ Selecionar Todos</button>
         </div>
+        <!-- Seletor de cor do cartão -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding:14px 18px;background:white;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06)">
+          <span style="font-size:13px;font-weight:600;color:var(--navy)">🎨 Cor do cartão:</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div onclick="setCartColor('navy')"    title="Azul Marinho"  style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#1a2744,#2d4080);cursor:pointer;border:3px solid transparent" id="cc-navy"></div>
+            <div onclick="setCartColor('verde')"   title="Verde"         style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#14532d,#16a34a);cursor:pointer;border:3px solid transparent" id="cc-verde"></div>
+            <div onclick="setCartColor('roxo')"    title="Roxo"          style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#4c1d95,#7c3aed);cursor:pointer;border:3px solid transparent" id="cc-roxo"></div>
+            <div onclick="setCartColor('vermelho')" title="Vermelho"     style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7f1d1d,#dc2626);cursor:pointer;border:3px solid transparent" id="cc-vermelho"></div>
+            <div onclick="setCartColor('preto')"   title="Preto"         style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#111,#374151);cursor:pointer;border:3px solid transparent" id="cc-preto"></div>
+            <div onclick="setCartColor('dourado')" title="Dourado"       style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#92400e,#c9a84c);cursor:pointer;border:3px solid transparent" id="cc-dourado"></div>
+            <div style="display:flex;align-items:center;gap:6px;margin-left:4px">
+              <span style="font-size:12px;color:var(--gray-600)">Personalizada:</span>
+              <input type="color" id="cc-custom" value="#1a2744" onchange="setCartColorCustom(this.value)" style="width:32px;height:28px;border:none;border-radius:6px;cursor:pointer;padding:0">
+            </div>
+          </div>
+        </div>
         <div id="carteirinhas-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:20px"></div>
       </div>
 
@@ -1775,7 +1791,7 @@ function buildCarteirinha(m) {
   const logo = CHURCH_LOGO;
   const church = CHURCH?.nome || 'Sistema Ministerial';
   const fotoEl = m.foto_url ? `<img src="${m.foto_url}">` : '👤';
-  return `<div class="carteirinha">
+  return `<div class="carteirinha" style="background:${cartBg}">
     <div class="cart-header">
       <div class="cart-church-logo">${logo ? `<img src="${logo}">` : '⛪'}</div>
       <div class="cart-church-name">${church}<span>Carteira de Membro</span></div>
@@ -1827,6 +1843,31 @@ function imprimirTodasCarteirinhas() {
   imprimirCarteirinhas(lista);
 }
 
+// ── COR DO CARTÃO ────────────────────────────────────────────
+const CART_COLORS = {
+  navy:     'linear-gradient(135deg,#1a2744 0%,#2d4080 50%,#1e3a8a 100%)',
+  verde:    'linear-gradient(135deg,#14532d 0%,#16a34a 50%,#15803d 100%)',
+  roxo:     'linear-gradient(135deg,#4c1d95 0%,#7c3aed 50%,#6d28d9 100%)',
+  vermelho: 'linear-gradient(135deg,#7f1d1d 0%,#dc2626 50%,#b91c1c 100%)',
+  preto:    'linear-gradient(135deg,#111827 0%,#374151 50%,#1f2937 100%)',
+  dourado:  'linear-gradient(135deg,#92400e 0%,#c9a84c 50%,#b45309 100%)',
+};
+let cartBg = CART_COLORS.navy;
+
+function setCartColor(name) {
+  cartBg = CART_COLORS[name];
+  document.querySelectorAll('[id^="cc-"]').forEach(el => el.style.border = '3px solid transparent');
+  const el = document.getElementById('cc-' + name);
+  if (el) el.style.border = '3px solid var(--gold)';
+  renderCarteirinhas(allMembrosCart);
+}
+
+function setCartColorCustom(hex) {
+  cartBg = `linear-gradient(135deg, ${hex} 0%, ${hex}cc 100%)`;
+  document.querySelectorAll('[id^="cc-"]').forEach(el => el.style.border = '3px solid transparent');
+  renderCarteirinhas(allMembrosCart);
+}
+
 function imprimirCarteirinhas(lista) {
   const html = `
     <style>
@@ -1837,7 +1878,7 @@ function imprimirCarteirinhas(lista) {
       .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
       .carteirinha {
         width: 340px; height: 210px; border-radius: 14px;
-        background: linear-gradient(135deg, #1a2744 0%, #2d4080 50%, #1e3a8a 100%);
+        background: ${cartBg};
         color: white; padding: 18px 20px; position: relative; overflow: hidden;
         box-shadow: 0 12px 40px rgba(0,0,0,0.3); page-break-inside: avoid;
       }
