@@ -1873,7 +1873,7 @@ function imprimirCarteirinhas(lista) {
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'DM Sans', sans-serif; background: #f0f0f0; padding: 20px; }
+      body { font-family: 'DM Sans', sans-serif; background: #f0f0f0; padding: 20px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .page-title { text-align:center; font-family:'Playfair Display',serif; font-size:20px; color:#1a2744; margin-bottom:20px; }
       .grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; }
       .carteirinha {
@@ -1898,7 +1898,7 @@ function imprimirCarteirinhas(lista) {
       .cart-footer { position:absolute;bottom:14px;right:18px;left:18px;display:flex;align-items:center;justify-content:space-between;z-index:1; }
       .cart-badge { background:linear-gradient(135deg,#c9a84c,#e2c97e);color:#1a2744;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase; }
       .cart-id { font-size:9px;opacity:0.4; }
-      @media print { body{background:white;padding:0} .grid{gap:10px} .page-title{margin-bottom:10px} }
+      @media print { body{background:white;padding:0} .grid{gap:10px} .page-title{margin-bottom:10px} .carteirinha{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;} }
     </style>
     <div class="page-title">${CHURCH?.nome || 'Sistema Ministerial'} — Carteirinhas de Membros</div>
     <div class="grid">
