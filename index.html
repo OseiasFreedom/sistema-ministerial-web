@@ -664,6 +664,71 @@ tr:hover td { background: var(--gray-50); }
 .cart-id { font-size: 9px; opacity: 0.4; }
 
 /* FICHA */
+
+/* ── RESPONSIVO ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 0px; }
+
+  .sidebar {
+    width: 220px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 200;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .main { margin-left: 0 !important; }
+
+  .topbar { padding: 12px 16px; }
+
+  .content { padding: 16px; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  .filter-bar { flex-wrap: wrap; gap: 8px; }
+  .filter-bar .search-input { width: 100%; }
+
+  #carteirinhas-grid { grid-template-columns: 1fr !important; }
+
+  .modal-body { padding: 16px; }
+  .form-row { grid-template-columns: 1fr !important; }
+
+  .table-wrap { overflow-x: auto; }
+
+  .auth-card { padding: 28px 20px; margin: 16px; }
+}
+
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .topbar h1 { font-size: 16px; }
+  .carteirinha { width: 100% !important; max-width: 340px; }
+}
+
+/* Botão hamburguer para mobile */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--navy);
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.hamburger:hover { background: var(--gray-100); }
+
+@media (max-width: 900px) {
+  .hamburger { display: block; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+  .sidebar-overlay.open { display: block; }
+}
+
 @media print {
   body * { visibility: hidden; }
   .print-area, .print-area * { visibility: visible; }
@@ -987,9 +1052,11 @@ tr:hover td { background: var(--gray-50); }
     </div>
   </nav>
 
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
   <!-- MAIN -->
   <div class="main">
     <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
       <h1 id="page-title">Dashboard</h1>
       <div class="topbar-actions" id="topbar-actions"></div>
     </div>
@@ -1898,7 +1965,72 @@ function imprimirCarteirinhas(lista) {
       .cart-footer { position:absolute;bottom:14px;right:18px;left:18px;display:flex;align-items:center;justify-content:space-between;z-index:1; }
       .cart-badge { background:linear-gradient(135deg,#c9a84c,#e2c97e);color:#1a2744;padding:3px 10px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase; }
       .cart-id { font-size:9px;opacity:0.4; }
-      @media print { body{background:white;padding:0} .grid{gap:10px} .page-title{margin-bottom:10px} .carteirinha{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;} }
+      
+/* ── RESPONSIVO ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --sidebar-w: 0px; }
+
+  .sidebar {
+    width: 220px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 200;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .main { margin-left: 0 !important; }
+
+  .topbar { padding: 12px 16px; }
+
+  .content { padding: 16px; }
+
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
+  .filter-bar { flex-wrap: wrap; gap: 8px; }
+  .filter-bar .search-input { width: 100%; }
+
+  #carteirinhas-grid { grid-template-columns: 1fr !important; }
+
+  .modal-body { padding: 16px; }
+  .form-row { grid-template-columns: 1fr !important; }
+
+  .table-wrap { overflow-x: auto; }
+
+  .auth-card { padding: 28px 20px; margin: 16px; }
+}
+
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .topbar h1 { font-size: 16px; }
+  .carteirinha { width: 100% !important; max-width: 340px; }
+}
+
+/* Botão hamburguer para mobile */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--navy);
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.hamburger:hover { background: var(--gray-100); }
+
+@media (max-width: 900px) {
+  .hamburger { display: block; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 199;
+  }
+  .sidebar-overlay.open { display: block; }
+}
+
+@media print { body{background:white;padding:0} .grid{gap:10px} .page-title{margin-bottom:10px} .carteirinha{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;} }
     </style>
     <div class="page-title">${CHURCH?.nome || 'Sistema Ministerial'} — Carteirinhas de Membros</div>
     <div class="grid">
